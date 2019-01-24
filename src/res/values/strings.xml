@@ -3,4 +3,8 @@
     <string name="button_files">Local-Files</string>
     <string name="button_server">Server</string>
     <string name="button_setting">Settings</string>
+
+    <string name="activity2_name">FilesActivity</string>
+    <string name="activity_server">ServerActivity</string>
+    <string name="activity_settings">SettingsActivity</string>
 </resources>
