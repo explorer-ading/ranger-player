@@ -9,8 +9,15 @@
         android:id="@+id/text_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="server."
+        android:text="server: "
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_header"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

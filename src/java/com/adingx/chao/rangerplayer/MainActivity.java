@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchSettings(View view) {
         Log.i(TAG, "launchSettings ~~");
         Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "setting ready ? ");
         startActivity(intent);
     }
 
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "launchFileWindow ~~");
 
         Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "local file worlds~ ");
         startActivity(intent);
     }
 
