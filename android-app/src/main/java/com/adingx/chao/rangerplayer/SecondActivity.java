@@ -12,8 +12,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class SecondActivity extends Activity {
+    public static final String EXTRA_MESSAGE = "com.adingx.chao.rangerplayer.extra.VideoFile";
     private static final String TAG = MainActivity.class.getSimpleName();
     private ListView listView;
+
+    // Defined Array values to show in ListView
+    private String[] listValues = new String[] {
+            "output.mp4",
+            "mkv-test.mkv"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +33,6 @@ public class SecondActivity extends Activity {
         Log.i(TAG, "bExtStorReadable: "  + bExtStorReadable);
 
         listView = (ListView)findViewById(R.id.listView);
-        // Defined Array values to show in ListView
-        String[] values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
-        };
 
         // Define a new Adapter
         // First parameter - Context
@@ -43,7 +40,7 @@ public class SecondActivity extends Activity {
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listValues);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -59,12 +56,23 @@ public class SecondActivity extends Activity {
                 // ListView Clicked item value
                 String  itemValue    = (String) listView.getItemAtPosition(position);
 
+                Log.d(TAG, "position: " + itemPosition + " ,Value: " + itemValue);
                 // Show Alert
+                /*
                 Toast.makeText(getApplicationContext(),
                         "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
                         .show();
+                */
+                Intent intent = new Intent(parent.getContext(), VideoPlayerActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, itemValue);
+                startActivity(intent);
             }
         });
+    }
+    public void runVideoPlayer(int idx) {
+        Intent intent = new Intent(this, VideoPlayerActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, listValues[idx]);
+        startActivity(intent);
     }
 
     /* Checks if external storage is available to at least read */

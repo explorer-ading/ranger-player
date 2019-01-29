@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchSettings(View view) {
         Log.i(TAG, "launchSettings ~~");
         Intent intent = new Intent(this, SettingsActivity.class);
+        //Intent intent = new Intent(this, VideoPlayerActivity.class);
         intent.putExtra(EXTRA_MESSAGE, "setting ready ? ");
         startActivity(intent);
     }

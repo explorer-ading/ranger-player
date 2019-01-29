@@ -7,4 +7,5 @@
     <string name="activity2_name">FilesActivity</string>
     <string name="activity_server">ServerActivity</string>
     <string name="activity_settings">SettingsActivity</string>
+    <string name="activity_videoplayer">videoplayer</string>
 </resources>
