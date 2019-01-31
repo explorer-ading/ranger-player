@@ -10,6 +10,8 @@
 ## Http Server
 * httpserver which support to submit your media files ;
 * [nanohttpd](https://github.com/NanoHttpd/nanohttpd)
+	Tiny, easily embeddable HTTP server in Java.
+* [android-example](https://stackoverflow.com/questions/14309256/using-nanohttpd-in-android)
 
 
 ## gradle 
