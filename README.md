@@ -1,7 +1,7 @@
 
 # ranger player
 
-* v0.2 version - 2.3 ;
+* v0.2 version - 2.5 ;
 	local video player support ( mkv, mp4) ;
 	http server;
 
