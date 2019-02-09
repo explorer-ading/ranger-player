@@ -1,7 +1,7 @@
 
 # ranger player
 
-* v0.3 version - 2.9 ;
+* v0.3 version - 2.10 ;
 	own define activity for exoplayer ;
 
 * v0.2 version - 2.6 ;
