@@ -9,17 +9,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SecondActivity extends Activity {
     public static final String EXTRA_MESSAGE = "com.adingx.chao.rangerplayer.extra.VideoFile";
-    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final String TAG = SecondActivity.class.getSimpleName();
     private ListView listView;
 
     // Defined Array values to show in ListView
     private String[] listValues = new String[] {
-            "output.mp4",
-            "mkv-test.mkv"
+        "output.mp4",
+        "mkv-test.mkv"
     };
 
     @Override

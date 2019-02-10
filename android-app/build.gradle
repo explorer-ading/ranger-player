@@ -23,7 +23,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     // exo player
-    implementation 'com.google.android.exoplayer:exoplayer:2.6.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.6.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.6.0'
+
     // nanohttpd
     implementation 'org.nanohttpd:nanohttpd:2.2.0'
 

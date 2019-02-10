@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = SettingsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

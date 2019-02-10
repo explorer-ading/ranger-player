@@ -55,7 +55,7 @@ public class ServerActivity extends AppCompatActivity {
         */
     }
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = ServerActivity.class.getSimpleName();
     private HttpApp server;
 
     @Override

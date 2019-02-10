@@ -18,17 +18,15 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 
 public class VideoPlayerActivity extends Activity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = VideoPlayerActivity.class.getSimpleName();
 
-    SimpleExoPlayerView exoPlayerView;
-    SimpleExoPlayer exoPlayer;
+    private SimpleExoPlayerView exoPlayerView;
+    private SimpleExoPlayer exoPlayer;
+    private long contentPosition = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
-        exoPlayerView = findViewById(R.id.exo_player_view);
+    private static final String PLAYING_POS = "PlayingPosition";
 
+    void initPlayer()   {
         try {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
             exoPlayerView.setPlayer(exoPlayer);
@@ -44,7 +42,7 @@ public class VideoPlayerActivity extends Activity {
             try {
                 fileDataSource.open(dataSpec);
             } catch (AssetDataSource.AssetDataSourceException e) {
-                Log.e(TAG," exoplayer error0 "+ e.toString());
+                Log.e(TAG,"exoplayer error0 "+ e.toString());
                 e.printStackTrace();
             }
             DataSource.Factory factory = new DataSource.Factory() {
@@ -53,7 +51,7 @@ public class VideoPlayerActivity extends Activity {
                     return fileDataSource;
                 }
             };
-            Log.d(TAG, "exoplayer error " + this.getFilesDir() + "/");
+            Log.d(TAG, "exoplayer local folder: " + this.getFilesDir() + "/");
 
             MediaSource mediaSource = new ExtractorMediaSource(
                     fileDataSource.getUri(),
@@ -62,10 +60,76 @@ public class VideoPlayerActivity extends Activity {
                     null, null
             );
 
+            Log.d(TAG, "exoplayer seek pos: " + contentPosition);
+            exoPlayer.seekTo(contentPosition);
             exoPlayer.prepare(mediaSource);
             exoPlayer.setPlayWhenReady(true);
         }catch (Exception e){
             Log.e(TAG," exoplayer error "+ e.toString());
         }
+    }
+    private void updatePlayerState() {
+        if (exoPlayer != null) {
+            contentPosition = Math.max(0, exoPlayer.getContentPosition());
+            Log.d(TAG, "updatePlayerState seek pos: " + contentPosition);
+        }
+    }
+    private void reset() {
+        if (exoPlayer != null) {
+            Log.d(TAG, "reset seek pos: " + contentPosition);
+            contentPosition = exoPlayer.getContentPosition();
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+    }
+
+    private void release() {
+        if (exoPlayer != null) {
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video);
+        exoPlayerView = findViewById(R.id.exo_player_view);
+
+        if (savedInstanceState != null) {
+            contentPosition = savedInstanceState.getLong(PLAYING_POS);
+            Log.i(TAG, "onCreate restore pos: " + contentPosition);
+        }
+        Log.i(TAG, "onCreate ~~~");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initPlayer();
+        Log.i(TAG, "onResume ~~~");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        reset();
+        //updatePlayerState();
+        Log.i(TAG, "onPause ~~~");
+    }
+
+    @Override
+    public void onDestroy() {
+        release();
+        super.onDestroy();
+        Log.i(TAG, "onDestroy ~~~");
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        updatePlayerState();
+        outState.putLong(PLAYING_POS, contentPosition);
+        Log.i(TAG, "onSaveInstanceState ~~~");
     }
 }
