@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">rangerPlayer</string>
-    <string name="button_files">Local-Files</string>
+    <string name="button_explorer">Explorer</string>
+    <string name="button_files">Assets</string>
     <string name="button_server">Server</string>
     <string name="button_setting">Settings</string>
 
-    <string name="activity2_name">FilesActivity</string>
+    <string name="activity_files">FilesActivity</string>
     <string name="activity_server">ServerActivity</string>
+    <string name="activity_explorer">ExplorerActivity</string>
     <string name="activity_settings">SettingsActivity</string>
     <string name="activity_videoplayer">videoplayer</string>
 </resources>

@@ -9,6 +9,14 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
+            android:text="@string/button_explorer"
+            android:id="@+id/button_explorer"
+            android:onClick="launchExplorerWindow"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
             android:text="@string/button_files"
             android:id="@+id/button_files"
             android:onClick="launchFileWindow"/>

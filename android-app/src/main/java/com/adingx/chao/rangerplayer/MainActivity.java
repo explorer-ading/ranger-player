@@ -21,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate ~~");
     }
 
+    public void launchExplorerWindow(View view) {
+        Log.i(TAG, "launchExplorerWindow ~~");
+
+        Intent intent = new Intent(this, ExplorerActivity.class);
+        startActivity(intent);
+    }
+
     public void launchSettings(View view) {
         Log.i(TAG, "launchSettings ~~");
         Intent intent = new Intent(this, SettingsActivity.class);
