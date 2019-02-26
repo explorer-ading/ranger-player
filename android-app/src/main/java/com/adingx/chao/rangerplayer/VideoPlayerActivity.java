@@ -21,15 +21,16 @@ public class VideoPlayerActivity extends Activity {
     private static final String TAG = VideoPlayerActivity.class.getSimpleName();
 
     private SimpleExoPlayerView exoPlayerView;
-    private SimpleExoPlayer exoPlayer;
+    private static SimpleExoPlayer exoPlayer;
     private long contentPosition = 0;
-
     private static final String PLAYING_POS = "PlayingPosition";
 
     void initPlayer()   {
+        if(exoPlayer != null) {
+            return ;
+        }
         try {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
-            exoPlayerView.setPlayer(exoPlayer);
 
             Intent intent = getIntent();
             String message = intent.getStringExtra(SecondActivity.EXTRA_MESSAGE);
@@ -68,18 +69,11 @@ public class VideoPlayerActivity extends Activity {
             Log.e(TAG," exoplayer error "+ e.toString());
         }
     }
+
     private void updatePlayerState() {
         if (exoPlayer != null) {
             contentPosition = Math.max(0, exoPlayer.getContentPosition());
             Log.d(TAG, "updatePlayerState seek pos: " + contentPosition);
-        }
-    }
-    private void reset() {
-        if (exoPlayer != null) {
-            Log.d(TAG, "reset seek pos: " + contentPosition);
-            contentPosition = exoPlayer.getContentPosition();
-            exoPlayer.release();
-            exoPlayer = null;
         }
     }
 
@@ -95,26 +89,25 @@ public class VideoPlayerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
         exoPlayerView = findViewById(R.id.exo_player_view);
-
         if (savedInstanceState != null) {
             contentPosition = savedInstanceState.getLong(PLAYING_POS);
             Log.i(TAG, "onCreate restore pos: " + contentPosition);
         }
         Log.i(TAG, "onCreate ~~~");
+        initPlayer();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initPlayer();
+        exoPlayerView.setPlayer(exoPlayer);
         Log.i(TAG, "onResume ~~~");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        reset();
-        //updatePlayerState();
+        exoPlayerView.setPlayer(null);
         Log.i(TAG, "onPause ~~~");
     }
 

@@ -19,7 +19,8 @@ public class SecondActivity extends Activity {
     // Defined Array values to show in ListView
     private String[] listValues = new String[] {
         "output.mp4",
-        "mkv-test.mkv"
+        "mkv-test.mkv",
+        "test.mp3"
     };
 
     @Override
