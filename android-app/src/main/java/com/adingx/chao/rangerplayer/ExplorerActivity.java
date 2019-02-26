@@ -32,7 +32,8 @@ public class ExplorerActivity extends Activity {
         }
         return false;
     }
-/*
+
+    /*
     private List<File> getListFiles(File parentDir) {
         ArrayList<File> inFiles = new ArrayList<File>();
         File[] files = parentDir.listFiles();
@@ -49,6 +50,7 @@ public class ExplorerActivity extends Activity {
         return inFiles;
     }
     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,19 +59,14 @@ public class ExplorerActivity extends Activity {
         Log.i(TAG, "onCreate ~~");
         String path;
         listValues.add("..");
-        //ArrayList<String> mFileNames;
         if (isExternalStorageReadable())    {
             path = Environment.getExternalStorageDirectory().toString() + File.separator + Environment.DIRECTORY_DOWNLOADS;
             Log.i(TAG, "Download path: " + path);
             File file = new File(path);
-            //String mRootPath = file.getAbsoluteFile().getPath();
-            //mFileNames = new ArrayList<String>();
-
             File filesInDirectory[] = file.listFiles();
             if (filesInDirectory != null) {
                 Log.i(TAG, "files numbs: " + filesInDirectory.length);
                 for (int i = 0; i<filesInDirectory.length;i++) {
-                    //mFileNames.add(filesInDirectory[i].getName());
                     listValues.add(filesInDirectory[i].getName());
                     Log.i(TAG, "file: " + filesInDirectory[i].getName());
                 }
@@ -103,30 +100,6 @@ public class ExplorerActivity extends Activity {
                         .show();
             }
         });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    Toast.makeText(getApplicationContext(), "permission was granted", Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-        }
     }
 
 
