@@ -1,14 +1,21 @@
 
 # ranger player
 
-* v0.3 version - 2.10 ;
+* v0.0.5  - 2.29 ;
+	bug fixed (explorer activity unstable - StableArrayAdapter need refactoring);
+
+* v0.0.4  - 2.27 ;
+	audio playing background support ;
+	file explorer support ;
+
+* v0.0.3  - 2.10 ;
 	own define activity for exoplayer ;
 
-* v0.2 version - 2.6 ;
+* v0.0.2  - 2.6 ;
 	local video player support ( mkv, mp4) ;
 	http server;
 
-* v0.1 version  - 1.27 ;
+* v0.0.1   - 1.27 ;
 	android java implementation ;
 	basic UEX ;
 
