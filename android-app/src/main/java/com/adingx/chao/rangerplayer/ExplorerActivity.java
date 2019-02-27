@@ -2,14 +2,12 @@ package com.adingx.chao.rangerplayer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +23,6 @@ public class ExplorerActivity extends Activity {
 
     // Defined Array values to show in ListView
     private ArrayList<String> listValues = new ArrayList<>();
-    private File filesInDirectory[];
     private String currentPath ;
 
     /* Checks if external storage is available to at least read */
@@ -37,24 +34,6 @@ public class ExplorerActivity extends Activity {
         }
         return false;
     }
-
-    /*
-    private List<File> getListFiles(File parentDir) {
-        ArrayList<File> inFiles = new ArrayList<File>();
-        File[] files = parentDir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                //inFiles.addAll(getListFiles(file));
-                inFiles.add(file);
-            } else {
-                //if(file.getName().endsWith(".csv")){
-                    inFiles.add(file);
-                //}
-            }
-        }
-        return inFiles;
-    }
-    */
 
     /* refer: https://www.vogella.com/tutorials/AndroidListView/article.html */
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -73,7 +52,7 @@ public class ExplorerActivity extends Activity {
         }
         @Override
         public boolean hasStableIds() {
-            return true;
+            return false;
         }
     }
 
@@ -85,7 +64,7 @@ public class ExplorerActivity extends Activity {
             // path = Environment.getExternalStorageDirectory().toString() + File.separator + Environment.DIRECTORY_DOWNLOADS;
             Log.i(TAG, "fillFileList path: " + path);
             File file = new File(path);
-            filesInDirectory = file.listFiles();
+            File filesInDirectory[] = file.listFiles();
             if (filesInDirectory != null) {
                 Log.i(TAG, "files numbs: " + filesInDirectory.length);
                 for (int i = 0; i<filesInDirectory.length;i++) {
@@ -100,27 +79,28 @@ public class ExplorerActivity extends Activity {
     }
 
     private void listOnClick(int pos)  {
-        String path;
+        File file;
 
         if(pos == 0) { // pos=0 mean that go up the folder
-            File file = new File(currentPath);
+            file = new File(currentPath);
             if( file.getParentFile().exists() ) {
-                path = file.getParentFile().getAbsolutePath();
-                fillFileList(path);
+                fillFileList( file.getParentFile().getAbsolutePath() );
             } else {
                 Log.i(TAG, "No parent path. ");
             }
         } else {
-            path = filesInDirectory[pos - 1].getName();
-            File file = new File(path);
-            Log.i(TAG, "listOnClick path: " + path);
+            File filesInDirectory[] = (new File(currentPath)).listFiles();
+            file = filesInDirectory[pos - 1];
+            Log.i(TAG, "listOnClick getAbsolutePath: " + file.getAbsolutePath());
+            Log.i(TAG, "listOnClick getAbsoluteFile: " + file.getAbsoluteFile());
+
             if(file.isDirectory()) {
                 Log.i(TAG, "it's a directory. ");
-                fillFileList(path);
+                fillFileList(file.getAbsolutePath());
             }else if(file.isFile()) {
                 // FIXME
                 Log.i(TAG, "it's a file. ");
-                Log.i(TAG, "listOnClick file: " + path);
+                Log.i(TAG, "listOnClick file: " + file.getAbsoluteFile());
             }else {
                 Log.i(TAG, "what's that... ");
             }
@@ -134,6 +114,8 @@ public class ExplorerActivity extends Activity {
 
         Log.i(TAG, "onCreate ~~");
         String path = Environment.getExternalStorageDirectory().toString() + File.separator + Environment.DIRECTORY_DOWNLOADS;
+        //String path = "/sdcard/";
+        
         Log.i(TAG, "Download path: " + path);
         fillFileList(path);
 
@@ -161,18 +143,16 @@ public class ExplorerActivity extends Activity {
                         "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
                         .show();
 
-                view.animate().setDuration(10).alpha(0)
+                view.animate().setDuration(1000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {
-                                view.setAlpha(1);
                                 listOnClick(itemPosition);
                                 adapter.notifyDataSetChanged();
+                                view.setAlpha(1);
                             }
                         });
             }
         });
     }
-
-
 }
