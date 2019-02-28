@@ -1,8 +1,9 @@
 
 # ranger player
 
-* v0.0.5  - 2.29 ;
+* v0.0.5  - 3.1 ;
 	bug fixed (explorer activity unstable - StableArrayAdapter need refactoring);
+	local file playing support via exoplayer ;
 
 * v0.0.4  - 2.27 ;
 	audio playing background support ;
