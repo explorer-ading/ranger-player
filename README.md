@@ -1,6 +1,10 @@
 
 # ranger player
 
+* v0.0.6  - 3.3 ;
+	file-explorer and local-file-playing bug fix ;
+	file-upload support ;
+
 * v0.0.5  - 3.1 ;
 	bug fixed (explorer activity unstable - StableArrayAdapter need refactoring);
 	local file playing support via exoplayer ;
