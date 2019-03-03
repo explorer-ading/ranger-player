@@ -105,12 +105,22 @@ public class FileChooser extends ListActivity {
 		}
 	}
 
+	public static String getFileExt(String fileName) {
+		return fileName.substring(fileName.lastIndexOf(".") + 1);
+	}
+
     private void onFileClick(Item o)  {
-		//Toast.makeText(this, "Folder Clicked: "+ currentDir, Toast.LENGTH_SHORT).show();
-		Intent intent = new Intent();
-		intent.putExtra("GetPath",currentDir.toString());
-		intent.putExtra("GetFileName",o.getName());
-		setResult(RESULT_OK, intent);
-		finish();
+		String fileExt = getFileExt(o.getName());
+
+		if( fileExt.equalsIgnoreCase("mp4") ||
+				fileExt.equalsIgnoreCase("mp3") ||
+				fileExt.equalsIgnoreCase("mkv") ) {
+			Intent intent = new Intent(this, VideoPlayerActivity.class);
+			intent.putExtra(VideoPlayerActivity.VIDEO_TYPE, "file");
+			intent.putExtra(VideoPlayerActivity.LOCAL_FILE, currentDir.toString() + File.separator + o.getName());
+			startActivity(intent);
+		} else {
+			Toast.makeText(this, "UNSUPPORT FORMAT: [" + fileExt + "] - " + o.getName(), Toast.LENGTH_SHORT).show();
+		}
 	}
 }

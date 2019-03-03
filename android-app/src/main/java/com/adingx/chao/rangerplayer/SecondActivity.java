@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class SecondActivity extends Activity {
-    public static final String EXTRA_MESSAGE = "com.adingx.chao.rangerplayer.extra.VideoFile";
 
     private static final String TAG = SecondActivity.class.getSimpleName();
     private ListView listView;
@@ -65,14 +64,16 @@ public class SecondActivity extends Activity {
                         .show();
                 */
                 Intent intent = new Intent(parent.getContext(), VideoPlayerActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, itemValue);
+                intent.putExtra(VideoPlayerActivity.VIDEO_TYPE, "asset");
+                intent.putExtra(VideoPlayerActivity.ASSET_FILENAME, itemValue);
                 startActivity(intent);
             }
         });
     }
     public void runVideoPlayer(int idx) {
         Intent intent = new Intent(this, VideoPlayerActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, listValues[idx]);
+        intent.putExtra(VideoPlayerActivity.VIDEO_TYPE, "asset");
+        intent.putExtra(VideoPlayerActivity.ASSET_FILENAME, listValues[idx]);
         startActivity(intent);
     }
 

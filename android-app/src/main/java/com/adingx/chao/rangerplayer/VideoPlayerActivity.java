@@ -16,8 +16,13 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.AssetDataSource;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
+import com.google.android.exoplayer2.upstream.FileDataSource;
 
 public class VideoPlayerActivity extends Activity {
+    public static final String VIDEO_TYPE = "com.adingx.chao.rangerplayer.extra.VideoType";
+    public static final String ASSET_FILENAME = "com.adingx.chao.rangerplayer.extra.AssetFileName";
+    public static final String LOCAL_FILE = "com.adingx.chao.rangerplayer.extra.LocalFile";
+
     private static final String TAG = VideoPlayerActivity.class.getSimpleName();
 
     private SimpleExoPlayerView exoPlayerView;
@@ -29,41 +34,76 @@ public class VideoPlayerActivity extends Activity {
         if(exoPlayer != null) {
             return ;
         }
+
         try {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
-
             Intent intent = getIntent();
-            String message = intent.getStringExtra(SecondActivity.EXTRA_MESSAGE);
+            String video_type = intent.getStringExtra(VIDEO_TYPE);
 
-            //String uri="asset:///output.mp4";
-            //String uri="asset:///mkv-test.mkv";
-            String uri = "asset:///" + message;
-            DataSpec dataSpec = new DataSpec(Uri.parse(uri));
-            final AssetDataSource fileDataSource = new AssetDataSource(this);
-            try {
-                fileDataSource.open(dataSpec);
-            } catch (AssetDataSource.AssetDataSourceException e) {
-                Log.e(TAG,"exoplayer error0 "+ e.toString());
-                e.printStackTrace();
-            }
-            DataSource.Factory factory = new DataSource.Factory() {
-                @Override
-                public DataSource createDataSource() {
-                    return fileDataSource;
+            if( video_type.equalsIgnoreCase("asset")) {
+
+                String message = intent.getStringExtra(ASSET_FILENAME);
+                //String uri="asset:///output.mp4";
+                //String uri="asset:///mkv-test.mkv";
+                String uri = "asset:///" + message;
+                DataSpec dataSpec = new DataSpec(Uri.parse(uri));
+                final AssetDataSource fileDataSource = new AssetDataSource(this);
+                try {
+                    fileDataSource.open(dataSpec);
+                } catch (AssetDataSource.AssetDataSourceException e) {
+                    Log.e(TAG, "exoplayer error0 " + e.toString());
+                    e.printStackTrace();
                 }
-            };
-            Log.d(TAG, "exoplayer local folder: " + this.getFilesDir() + "/");
+                DataSource.Factory factory = new DataSource.Factory() {
+                    @Override
+                    public DataSource createDataSource() {
+                        return fileDataSource;
+                    }
+                };
+                Log.d(TAG, "exoplayer local folder: " + this.getFilesDir() + "/");
 
-            MediaSource mediaSource = new ExtractorMediaSource(
-                    fileDataSource.getUri(),
-                    factory,
-                    new DefaultExtractorsFactory(),
-                    null, null
-            );
+                MediaSource mediaSource = new ExtractorMediaSource(
+                        fileDataSource.getUri(),
+                        factory,
+                        new DefaultExtractorsFactory(),
+                        null, null
+                );
+                Log.d(TAG, "exoplayer seek pos: " + contentPosition);
+                exoPlayer.seekTo(contentPosition);
+                exoPlayer.prepare(mediaSource);
 
-            Log.d(TAG, "exoplayer seek pos: " + contentPosition);
-            exoPlayer.seekTo(contentPosition);
-            exoPlayer.prepare(mediaSource);
+            }else if( video_type.equalsIgnoreCase("file")) {
+                //...
+                String message = intent.getStringExtra(LOCAL_FILE);
+
+                String uri = "file://" + message;
+                DataSpec dataSpec = new DataSpec(Uri.parse(uri));
+                final FileDataSource fileDataSource = new FileDataSource();
+                try {
+                    fileDataSource.open(dataSpec);
+                } catch (Exception e) {
+                    Log.e(TAG, "exoplayer error0 " + e.toString());
+                    e.printStackTrace();
+                }
+                DataSource.Factory factory = new DataSource.Factory() {
+                    @Override
+                    public DataSource createDataSource() {
+                        return fileDataSource;
+                    }
+                };
+                Log.d(TAG, "exoplayer local folder: " + this.getFilesDir() + "/");
+
+                MediaSource mediaSource = new ExtractorMediaSource(
+                        fileDataSource.getUri(),
+                        factory,
+                        new DefaultExtractorsFactory(),
+                        null, null
+                );
+                Log.d(TAG, "exoplayer seek pos: " + contentPosition);
+                exoPlayer.seekTo(contentPosition);
+                exoPlayer.prepare(mediaSource);
+            }
+
             exoPlayer.setPlayWhenReady(true);
         }catch (Exception e){
             Log.e(TAG," exoplayer error "+ e.toString());
