@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchExplorerWindow(View view) {
         Log.i(TAG, "launchExplorerWindow ~~");
 
-        Intent intent = new Intent(this, ExplorerActivity.class);
+        Intent intent = new Intent(this, FileChooser.class);
         startActivity(intent);
     }
 

@@ -27,7 +27,7 @@
                 android:value="com.adingx.chao.rangerplayer.MainActivity" />
         </activity>
         <activity
-            android:name=".ExplorerActivity"
+            android:name=".FileChooser"
             android:label="@string/activity_explorer"
             android:parentActivityName=".MainActivity">
             <meta-data
