@@ -1,13 +1,20 @@
 apply plugin: 'com.android.application'
 
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 7
+def versionBuild = 3 // bump for dogfood builds, public betas, etc.
+
 android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.adingx.chao.rangerplayer"
         minSdkVersion 27
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
