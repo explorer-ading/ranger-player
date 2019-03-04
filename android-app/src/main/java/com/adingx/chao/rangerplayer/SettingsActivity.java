@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         textView.setText(message);
 
         String version = "v0.0.0";
-        version = "VERSION: " + BuildConfig.VERSION_NAME ;
+        version = "VERSION: " + BuildConfig.VERSION_NAME + "(" + BuildConfig.VERSION_CODE +  ")";
         /*
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(getPackageName(), 0);
